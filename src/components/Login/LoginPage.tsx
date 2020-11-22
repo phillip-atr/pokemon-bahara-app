@@ -1,8 +1,8 @@
 import React from 'react'
-import logo from '../assets/images/pokeball-logo.png'
+import logo from '../../assets/images/pokeball-logo.png';
 import LoginForm from './LoginForm'
 
- export const Login: React.FC = () => {
+ export const LoginPage: React.FC = () => {
   return (
     <div className="flex">
       <div className="w-6/12 flex h-screen justify-center items-center bg-red-500">

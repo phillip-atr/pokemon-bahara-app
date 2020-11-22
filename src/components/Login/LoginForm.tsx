@@ -18,7 +18,7 @@ const LoginForm: React.FC = () => {
           <input className="shadow appearance-none border border-gray-800 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" />
         </div>
         <div className="flex items-center justify-between">
-          <Link to="/home" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+          <Link to="/pokemons" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
             Sign In
           </Link>
         </div>

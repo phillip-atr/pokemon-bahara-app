@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import logo from '../assets/images/pokeball-logo.png'
+import logo from '../../assets/images/pokeball-logo.png';
  
  export const Header = () => {
    return (
@@ -16,8 +16,8 @@ import logo from '../assets/images/pokeball-logo.png'
       </div>
       <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div className="text-sm lg:flex-grow">
-          <Link href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4" to="/home">
-            Home
+          <Link href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4" to="/pokemons">
+            Pokemons
           </Link>
           <Link href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4" to="/trainer">
             Trainer

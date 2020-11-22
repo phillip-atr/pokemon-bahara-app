@@ -3,26 +3,30 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  useParams
 } from "react-router-dom";
 
-import {Login} from '../src/Login';
-import {Home} from '../src/Home';
-import {Header} from './components/Header'
+import {Login} from '../src/pages/Login';
+import {Home} from '../src/pages/Home';
+import {Trainer} from '../src/pages/Trainer';
+import {Pokemon} from '../src/pages/Pokemon';
 
 const App: React.FC = () => {
   return (
     <Router>
-      <Header/>
       <Switch>
         <Route path="/trainer">
-          Trainer
+          <Trainer />
         </Route>
-        <Route path="/home">
+        <Route path="/pokemons/:slug">
+          <Pokemon />
+        </Route>
+        <Route path="/pokemons">
           <Home />
         </Route>
-        {/* <Route path="/">
+        <Route path="/">
           <Login />
-        </Route> */}
+        </Route>
       </Switch>
     </Router>
   );
