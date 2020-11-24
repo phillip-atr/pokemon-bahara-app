@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {List} from '../Pokemons';
+import {List} from '../pokemon-list/list-of-cards';
 import axios from 'axios';
 
 export const HomePage: React.FC = () => {

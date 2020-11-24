@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../../assets/images/pokeball-logo.png';
-import LoginForm from './LoginForm'
+import LoginForm from './login-form';
 
  export const LoginPage: React.FC = () => {
   return (
