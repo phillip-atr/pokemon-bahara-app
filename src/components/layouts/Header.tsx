@@ -1,8 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import logo from '../../assets/images/pokeball-logo.png';
  
  export const Header = () => {
+  const history = useHistory();
+  
+  const onSubmit = () => {
+    localStorage.clear();
+    history.push('/');
+  }
+
    return (
     <nav className="flex items-center justify-between flex-wrap bg-red-500 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6 space-x-3">
@@ -16,15 +23,16 @@ import logo from '../../assets/images/pokeball-logo.png';
       </div>
       <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div className="text-sm lg:flex-grow">
-          <Link href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4" to="/pokemons">
+          <Link className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4" to="/pokemons">
             Pokemons
           </Link>
-          <Link href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4" to="/trainer">
+          <Link className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4" to="/trainer">
             Trainer
           </Link>
-          <Link href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white" to="#">
+          <Link className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white" to="#">
             Blog
           </Link>
+          <button className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4 float-right" onClick={onSubmit}>Logout</button>
         </div>
       </div>
     </nav>

@@ -1,8 +1,8 @@
 import React from 'react'
-import logo from '../../assets/images/pokeball-logo.png';
-import LoginForm from './login-form';
+import RegisterForm  from '../components/auth/register-form';
+import logo from '../assets/images/pokeball-logo.png';
 
- export const LoginPage: React.FC = () => {
+export const Register = () => {
   return (
     <div className="flex">
       <div className="w-6/12 flex h-screen justify-center items-center bg-red-500">
@@ -10,7 +10,7 @@ import LoginForm from './login-form';
       </div>
       <div className="w-6/12">
         <div className="flex h-screen justify-center items-center">
-          <LoginForm />
+          <RegisterForm />
         </div>
       </div>
     </div>
