@@ -30,6 +30,7 @@ const LoginForm: React.FC = () => {
     if (user) {
       localStorage.setItem('token', user.token);
       localStorage.setItem('user', user.id);
+      localStorage.setItem('trainer', user.trainer_id);
       history.push('/pokemons');
     }
   })

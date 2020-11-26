@@ -1,8 +1,8 @@
 import React from 'react'
 
 export const HPInfo = ({card}: any) => {
-  if (card.hp !== 'None') {
-    return <h1 className="text-4xl text-gray-700">HP {card.hp}</h1>
+  if (card.supertype === 'Energy' || card.supertype === 'Trainer') {
+    return <div></div>
   }
-  return <div></div>
+  return <h1 className="text-4xl text-gray-700">HP {card.hp}</h1>
 }

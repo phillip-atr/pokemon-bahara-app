@@ -6,11 +6,13 @@ import {HPInfo} from './hp-info';
 import {WeaknessesInfo} from './weaknesses-info';
 import {ResistancesInfo} from './resistances-info';
 import {RetreatCostInfo} from './retreat-cost-info';
+import pokemonService from '../../shared/services/pokemon.service';
 
 export const PokemonPage = () => {
   let { slug } = useParams<any | null>();
   const [pokemon, setPokemon] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSelected, setIsSelected] = useState(true);
 
   useEffect(() => {
     async function getPokemon () {
@@ -20,6 +22,48 @@ export const PokemonPage = () => {
     };
     getPokemon();
   }, [slug])
+
+  const onSubmit = (e: React.FormEvent<EventTarget>)  => {
+    setIsSelected(false);
+
+    if (pokemon.card.supertype === 'Trainer') {
+      alert('The selected card is a Trainer Card. Please choose a Pokemon Card');
+      setIsSelected(true);
+      return
+    }
+
+    if (pokemon.card.supertype === 'Energy') {
+      alert('The selected card is a Energy Card. Please choose a Pokemon Card');
+      setIsSelected(true);
+      return
+    }
+
+    const payload = {
+      name: pokemon.card.name,
+      type: pokemon.card.types[0],
+      trainer_id: localStorage.getItem('trainer'),
+      pokemon_id: pokemon.card.id
+    }
+
+    pokemonService.create(payload)
+      .then(() => {
+        alert('Successfully store in the collection');
+        setIsSelected(true);
+      })
+      .catch(err => {
+        console.log(err);
+        alert('Invalid.');
+        setIsSelected(true);
+      });
+  }
+
+  const SelectButton = () => {
+    if (!isSelected) {
+      return <div>Loading...</div>;
+    }else {
+      return <button className="w-56 bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded" onClick={onSubmit}>Select</button>;
+    }
+  }
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -42,7 +86,7 @@ export const PokemonPage = () => {
                   <div className="max-w-sm">
                     <img className="w-full mb-4" src={pokemon.card.imageUrl} alt="Sunset in the mountains" />
                     <div className="flex justify-center">
-                      <button className="w-56 bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded">Select</button>
+                      <SelectButton />
                     </div>
                   </div>
 
