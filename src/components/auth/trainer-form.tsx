@@ -15,6 +15,8 @@ const TrainerForm: React.FC = () => {
 
   const onSubmit = (e: React.FormEvent<EventTarget>): void  => {
     e.preventDefault();
+    
+    setIsLoading(true);
 
     let target = e.target as HTMLFormElement;
 
@@ -31,7 +33,8 @@ const TrainerForm: React.FC = () => {
     trainerService.create(payload)
       .then(() => {
         alert('Successfully created new Trainer');
-        history.push('/pokemons');
+        setIsLoading(false);
+        history.push('/');
       })
       .catch(err => {
         console.log(err);
@@ -64,7 +67,7 @@ const TrainerForm: React.FC = () => {
         <form id="login" className="px-8 pt-6 pb-8 mb-4" onSubmit={onSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-              Name
+              Trainer Name
             </label>
             <input className="shadow appearance-none border border-gray-800 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" />
           </div>

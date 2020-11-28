@@ -29,8 +29,8 @@ import logo from '../../assets/images/pokeball-logo.png';
           <Link className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4" to="/trainer">
             Trainer
           </Link>
-          <Link className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white" to="#">
-            Blog
+          <Link className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white" to="/collections">
+            Collections
           </Link>
           <button className="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4 float-right" onClick={onSubmit}>Logout</button>
         </div>

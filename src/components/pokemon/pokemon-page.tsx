@@ -9,7 +9,7 @@ import {RetreatCostInfo} from './retreat-cost-info';
 import pokemonService from '../../shared/services/pokemon.service';
 
 export const PokemonPage = () => {
-  let { slug } = useParams<any | null>();
+  let { slug, trainer } = useParams<any | null>();
   const [pokemon, setPokemon] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSelected, setIsSelected] = useState(true);
@@ -41,10 +41,12 @@ export const PokemonPage = () => {
     const payload = {
       name: pokemon.card.name,
       type: pokemon.card.types[0],
+      weakness: pokemon.card.weaknesses ? pokemon.card.weaknesses[0].type : null,
+      resistance: pokemon.card.resistances ? pokemon.card.resistances[0].type : null,
       trainer_id: localStorage.getItem('trainer'),
       pokemon_id: pokemon.card.id
     }
-
+    
     pokemonService.create(payload)
       .then(() => {
         alert('Successfully store in the collection');
@@ -60,9 +62,13 @@ export const PokemonPage = () => {
   const SelectButton = () => {
     if (!isSelected) {
       return <div>Loading...</div>;
-    }else {
-      return <button className="w-56 bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded" onClick={onSubmit}>Select</button>;
     }
+    
+    if (trainer) {
+      return <div>Selected</div>;
+    }
+
+    return <button className="w-56 bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded" onClick={onSubmit}>Select</button>;
   }
 
   if (isLoading) {
@@ -76,7 +82,7 @@ export const PokemonPage = () => {
             <div className="py-4 px-6">
 
               <div className="flex mb-4">
-                <Link to="/pokemons" className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Back</Link>
+                <Link to={trainer ? '/collections' : '/pokemons'} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Back</Link>
               </div>
 
               <div className="flex flex-row">

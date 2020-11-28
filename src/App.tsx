@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useParams
 } from "react-router-dom";
 
 import {Login} from '../src/pages/Login';
@@ -13,16 +12,23 @@ import {TrainerEdit} from '../src/pages/TrainerEdit';
 import {Home} from '../src/pages/Home';
 import {Trainer} from '../src/pages/Trainer';
 import {Pokemon} from '../src/pages/Pokemon';
+import {Collections} from '../src/pages/Collections';
 
 const App: React.FC = () => {
   return (
     <Router>
       <Switch>
+        <Route path="/collections">
+          <Collections />
+        </Route>
         <Route path="/trainer/:slug/edit">
           <TrainerEdit />
         </Route>
         <Route path="/trainer">
           <Trainer />
+        </Route>
+        <Route path="/pokemons/:slug/trainer/:trainer">
+          <Pokemon />
         </Route>
         <Route path="/pokemons/:slug">
           <Pokemon />
