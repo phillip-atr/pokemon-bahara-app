@@ -13,11 +13,15 @@ import {Home} from '../src/pages/Home';
 import {Trainer} from '../src/pages/Trainer';
 import {Pokemon} from '../src/pages/Pokemon';
 import {Collections} from '../src/pages/Collections';
+import {CollectionEdit} from '../src/pages/CollectionEdit';
 
 const App: React.FC = () => {
   return (
     <Router>
       <Switch>
+        <Route path="/collections/:slug/edit">
+          <CollectionEdit />
+        </Route>
         <Route path="/collections">
           <Collections />
         </Route>

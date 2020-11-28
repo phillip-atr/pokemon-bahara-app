@@ -35,7 +35,7 @@ const useSortableData = (items: any, config: any = null) => {
   return { items: sortedItems, requestSort, sortConfig };
 };
 
-export const CollectionsTable = ({props}: any) => {
+export const CollectionsTable = ({props, removePokemon}: any) => {
   const { items, requestSort, sortConfig } = useSortableData(props);
   const getClassNamesFor = (name: any) => {
     if (!sortConfig) {
@@ -44,6 +44,10 @@ export const CollectionsTable = ({props}: any) => {
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
 
+  function handleChange(value: any) {
+    removePokemon(value);
+  }
+
   return (
     <table className="min-w-full divide-y divide-gray-200">
       <thead>
@@ -51,6 +55,11 @@ export const CollectionsTable = ({props}: any) => {
           <th scope="col" className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             <button onClick={() => requestSort('id')} className={getClassNamesFor('id')}>
               ID
+            </button>
+          </th>
+          <th scope="col" className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <button onClick={() => requestSort('pokemon_id')} className={getClassNamesFor('pokemon_id')}>
+              Pokemon TCG ID
             </button>
           </th>
           <th scope="col" className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -84,7 +93,7 @@ export const CollectionsTable = ({props}: any) => {
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
-        {items.map((pokemon: any, index: number) => <CollectionsTableRow key={index} id={pokemon.pokemon_id} name={pokemon.name} nickname={pokemon.nickname} type={pokemon.type} weakness={pokemon.weakness} resistance={pokemon.resistance} trainer={pokemon.trainer_id} />)}
+        {items.map((pokemon: any, index: number) => <CollectionsTableRow key={index} id={pokemon.id} pokemon_id={pokemon.pokemon_id} name={pokemon.name} nickname={pokemon.nickname} type={pokemon.type} weakness={pokemon.weakness} resistance={pokemon.resistance} trainer={pokemon.trainer_id} removePokemon={handleChange} />)}
       </tbody>
     </table>
   )

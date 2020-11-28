@@ -6,8 +6,13 @@ import pokemonService from '../../shared/services/pokemon.service';
 export const CollectionsPage = () => {
   const [pokemons, setPokemons] = useState<any | null>(null);
   const [types, setTypes] = useState<any | null>(null);
+  const [search, setSearch] = useState<any | null>(null);
+  const [typeOptions, setTypeOptions] = useState<any | null>(null);
+  const [weaknessOptions, setWeaknessOptions] = useState<any | null>(null);
+  const [resistanceOptions, setResistanceOptions] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
+  const [loadingClearButton, setloadingClearButton] = useState<boolean>(false);
   const trainer_id = localStorage.getItem('trainer');
 
   const FilterButton = () => {
@@ -17,6 +22,18 @@ export const CollectionsPage = () => {
       return (
         <button className="w-40 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
           Filter
+        </button>
+      );
+    }
+  }
+
+  const ClearFilter = () => {
+    if (loadingClearButton) {
+      return <div className="mt-2">Loading...</div>
+    } else {
+      return (
+        <button onClick={clearFilter} className="w-40 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          Clear
         </button>
       );
     }
@@ -62,6 +79,39 @@ export const CollectionsPage = () => {
     getPokemonInfos();
   }, []);
 
+  const clearFilter = async () => {
+    setloadingClearButton(true);
+    await Promise.all([
+      setSearch(''),
+      setTypeOptions(''),
+      setWeaknessOptions(''),
+      setResistanceOptions(''),
+      getPokemonInfos()
+    ]);
+    setloadingClearButton(false);
+  }
+
+  const handleChange = (event: any) => {
+    switch(event.target.name) {
+      case 'search':
+        setSearch(event.target.value);
+        break;
+      case 'type':
+        setTypeOptions(event.target.value);
+        break;
+      case 'weakness':
+        setWeaknessOptions(event.target.value);
+        break;
+      case 'resistance':
+        setResistanceOptions(event.target.value);
+        break;
+    }
+  }
+
+  const removePokemon = (id: any) => {
+    pokemonService.delete(id).then(() => getPokemonInfos()).catch((err) => alert(err));
+  }
+
   if (isLoading) {
     return <div>Loading...</div>
   } else {
@@ -75,14 +125,14 @@ export const CollectionsPage = () => {
                   <div className="w-1/5">
                     <div className="flex flex-row items-center  space-x-3">
                       <label htmlFor="Search">Search: </label>
-                      <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="search" name="search" type="text" placeholder="Search..." />
+                      <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="search" name="search" type="text" value={search} onChange={handleChange} placeholder="Search..." />
                     </div>
                   </div>
                   <div className="w-1/5">
                     <div className="flex flex-row items-center  space-x-3">
                       <label htmlFor="Search">Type: </label>
                       <div className="inline-block relative w-64">
-                        <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" id="type" name="type">
+                        <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" id="type" name="type" value={typeOptions} onChange={handleChange}>
                           <option value="">Choose Type</option>
                           {types.data.map((type: any, index: number) => <option key={index} value={type.name}>{type.name}</option>)}
                         </select>
@@ -96,7 +146,7 @@ export const CollectionsPage = () => {
                     <div className="flex flex-row items-center  space-x-3">
                       <label htmlFor="Search">Weakness: </label>
                       <div className="inline-block relative w-64">
-                        <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" id="weakness" name="weakness">
+                        <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" id="weakness" name="weakness" value={weaknessOptions} onChange={handleChange}>
                           <option value="">Choose Type</option>
                           {types.data.map((type: any, index: number) => <option key={index} value={type.name}>{type.name}</option>)}
                         </select>
@@ -110,7 +160,7 @@ export const CollectionsPage = () => {
                     <div className="flex flex-row items-center  space-x-3">
                       <label htmlFor="Search">Resistance: </label>
                       <div className="inline-block relative w-64">
-                        <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" id="resistance" name="resistance">
+                        <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" id="resistance" name="resistance" value={resistanceOptions} onChange={handleChange}>
                           <option value="">Choose Type</option>
                           {types.data.map((type: any, index: number) => <option key={index} value={type.name}>{type.name}</option>)}
                         </select>
@@ -121,8 +171,9 @@ export const CollectionsPage = () => {
                     </div>
                   </div>
                   <div className="w-1/5">
-                    <div className="flex flex-row justify-center">
+                    <div className="flex flex-row justify-center space-x-3">
                       <FilterButton />
+                      <ClearFilter />
                     </div>
                   </div>
                 </div>
@@ -130,7 +181,7 @@ export const CollectionsPage = () => {
             </div>
           </div>
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <CollectionsTable props={pokemons} />
+            <CollectionsTable props={pokemons} removePokemon={removePokemon}/>
           </div>
         </div>
       </div>

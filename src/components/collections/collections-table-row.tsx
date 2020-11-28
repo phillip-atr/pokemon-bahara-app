@@ -3,19 +3,33 @@ import { Link } from 'react-router-dom'
 
 interface Props {
   id: string,
+  pokemon_id: string,
   name: string,
   nickname: string | null,
   type: string | null,
   weakness: string | null,
   resistance: string | null,
-  trainer: string | null
+  trainer: string | null,
+  removePokemon: any
 }
 
-export const CollectionsTableRow = ({id, name, nickname, type, weakness, resistance, trainer}: Props) => {
+export const CollectionsTableRow = ({id, pokemon_id, name, nickname, type, weakness, resistance, trainer, removePokemon}: Props) => {
+
+  const handleChange = () => {
+    removePokemon(id);
+  }
+
+  const DeleteButton = () => {
+    return <button onClick={handleChange} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+  }
+
   return (
     <tr>
       <td className="px-6 py-4 whitespace-nowrap">
         {id}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap">
+        {pokemon_id}
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         {name}
@@ -35,8 +49,8 @@ export const CollectionsTableRow = ({id, name, nickname, type, weakness, resista
       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
         <div className="flex justify-center space-x-3">
           <Link to={`/pokemons/${id}/trainer/${trainer}`} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">View</Link>
-          <a href="#" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
-          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+          <Link to={`/collections/${id}/edit`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</Link>
+          <DeleteButton />
         </div>
       </td>
     </tr>
