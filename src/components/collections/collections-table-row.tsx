@@ -48,7 +48,7 @@ export const CollectionsTableRow = ({id, pokemon_id, name, nickname, type, weakn
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
         <div className="flex justify-center space-x-3">
-          <Link to={`/pokemons/${id}/trainer/${trainer}`} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">View</Link>
+          <Link to={`/pokemons/${pokemon_id}/trainer/${trainer}`} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">View</Link>
           <Link to={`/collections/${id}/edit`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</Link>
           <DeleteButton />
         </div>
